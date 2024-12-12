@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traffic-producer
+  template:
+    metadata:
+      labels:
+        app: traffic-producer
+    spec:
+      containers:
+        - name: producer
+          image: traffic-prediction/producer:latest
+          envFrom:
+            - configMapRef:
+                name: traffic-config
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

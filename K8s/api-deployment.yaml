@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: traffic-api
+  template:
+    metadata:
+      labels:
+        app: traffic-api
+    spec:
+      containers:
+        - name: api
+          image: traffic-prediction/api:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: traffic-config
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traffic-api
+spec:
+  selector:
+    app: traffic-api
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: LoadBalancer
