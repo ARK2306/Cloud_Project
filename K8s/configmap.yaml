@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traffic-config
+data:
+  KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  CONSUMER_GROUP_ID: "traffic_prediction_group"
+  PEMS_API_KEY: "pems-api-key"
+  NYC_DOT_API_KEY: "nyc-api-key"
+  MODEL_PATH: "traffic_model.h5"
+  LOGGING_LEVEL: "INFO"
+  WEBSOCKET_HOST: "0.0.0.0"
+  WEBSOCKET_PORT: "8000"
